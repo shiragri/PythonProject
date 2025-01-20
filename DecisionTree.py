@@ -1,105 +1,104 @@
-import pandas as pd
+
+
 import numpy as np
-import math
+import pandas as pd
 
-# 1. העלאת הנתונים
-file_path = 'loan_approval_dataset.csv'  # עדכני את הנתיב
-
-data = pd.read_csv(file_path)
-
-# 2. ניקוי ונירמול הנתונים
-# פונקציה לנירמול עמודות
-def normalize_column(col):
-    return (col - col.min()) / (col.max() - col.min())
-
-# נירמול כל העמודות למעט עמודת המטרה
-for col in data.columns[:-1]:
-    data[col] = normalize_column(data[col])
-
-# 3. חלוקת הנתונים ל-Train, Validation, ו-Test
-# פונקציה לחלוקה ידנית
-def train_val_test_split(X, y, test_size=0.2, val_size=0.1, random_state=42):
-    np.random.seed(random_state)
-    indices = np.arange(len(X))
-    np.random.shuffle(indices)
-
-    test_size = int(len(X) * test_size)
-    val_size = int(len(X) * val_size)
-
-    train_indices = indices[:-(test_size + val_size)]
-    val_indices = indices[-(test_size + val_size):-test_size]
-    test_indices = indices[-test_size:]
-
-    X_train, X_val, X_test = X.iloc[train_indices], X.iloc[val_indices], X.iloc[test_indices]
-    y_train, y_val, y_test = y.iloc[train_indices], y.iloc[val_indices], y.iloc[test_indices]
-
-    return X_train, X_val, X_test, y_train, y_val, y_test
-
-# חלוקה
-X = data.drop(columns=[' loan_status'])  # מאפיינים
-y = data[' loan_status']  # משתנה מטרה
-
-X_train, X_val, X_test, y_train, y_val, y_test = train_val_test_split(X, y, test_size=0.2, val_size=0.1)
-
-# 4. מימוש Decision Tree
 class DecisionTreeClassifier:
-    def __init__(self, max_depth=None):
-        self.max_depth = max_depth
+    def __init__(self):
         self.tree = None
 
-    def fit(self, X, y):
-        self.tree = self._build_tree(X, y, depth=0)
+    def fit(self, x, y):
+        self.tree = self._build_tree(x, y, depth=0)
 
-    def _build_tree(self, X, y, depth):
-        if len(np.unique(y)) == 1 or (self.max_depth is not None and depth >= self.max_depth):
+    def _build_tree(self, x, y, depth):
+        # If all the examples belong to the same class.
+        if len(np.unique(y)) == 1:
             return np.unique(y, return_counts=True)[0][0]
 
-        best_feature, best_threshold = self._find_best_split(X, y)
+        # If there are no more features to split on
+        if x.empty :
+            return np.unique(y, return_counts=True)[0][0]
+
+        #  search for the best feature to split on
+        best_feature = self._find_best_split(x, y)
         if best_feature is None:
             return np.unique(y, return_counts=True)[0][0]
 
-        left_indices = X[best_feature] <= best_threshold
-        right_indices = X[best_feature] > best_threshold
+        # Finding the median of the values for the feature
+        median = x[best_feature].median()
 
-        left_subtree = self._build_tree(X[left_indices], y[left_indices], depth + 1)
-        right_subtree = self._build_tree(X[right_indices], y[right_indices], depth + 1)
+        # Splitting the data into two groups:
+        # one with values less than or equal to the median, and one with values greater than the median
+        left_indices = x[best_feature] <= median
+        right_indices = x[best_feature] > median
+
+        # Ensuring that the split does not result in empty groups
+        if left_indices.sum() == 0 or right_indices.sum() == 0:
+            return np.unique(y, return_counts=True)[0][0]
+
+        #  Building the subtrees recursively
+        left_subtree = self._build_tree(x[left_indices], y[left_indices], depth + 1)
+        right_subtree = self._build_tree(x[right_indices], y[right_indices], depth + 1)
 
         return {
             'feature': best_feature,
-            'threshold': best_threshold,
+            'threshold': median,
             'left': left_subtree,
             'right': right_subtree
         }
 
-    def _find_best_split(self, X, y):
+    #Iterates over all the attributes (columns) in the data
+    # calculates the Information Gain for each possible value of the attribute.
+    # The attribute with the highest Information Gain will be chosen for the split
+    def _find_best_split(self, x, y):
         best_feature = None
         best_threshold = None
-        best_gini = float('inf')
+        best_info_gain = -float('inf')
 
-        for feature in X.columns:
-            thresholds = X[feature].unique()
+        for feature in x.columns:
+            thresholds = x[feature].unique()
             for threshold in thresholds:
-                gini = self._calculate_gini(X[feature], y, threshold)
-                if gini < best_gini:
-                    best_gini = gini
+                info_gain = self._calculate_information_gain(x[feature], y, threshold)
+                if info_gain > best_info_gain:
+                    best_info_gain = info_gain
                     best_feature = feature
                     best_threshold = threshold
 
-        return best_feature, best_threshold
+        return best_feature
 
-    def _calculate_gini(self, feature_col, y, threshold):
+    def _calculate_information_gain(self, feature_col, y, threshold):
+        # Splitting the groups according to the threshold.
         left_indices = feature_col <= threshold
         right_indices = feature_col > threshold
 
-        left_gini = 1.0 - sum((np.sum(y[left_indices] == cls) / len(y[left_indices]))**2 for cls in np.unique(y))
-        right_gini = 1.0 - sum((np.sum(y[right_indices] == cls) / len(y[right_indices]))**2 for cls in np.unique(y))
+        # Calculating the entropy of each group.
+        def entropy(y):
+            class_counts = np.bincount(y)
 
-        total_gini = (len(y[left_indices]) / len(y)) * left_gini + (len(y[right_indices]) / len(y)) * right_gini
-        return total_gini
+            # Calculating the probabilities of each class.
+            total_count = len(y)
+            k = len(np.unique(y))  # Number of distinct classes.
+            probabilities = (class_counts + 1) / (total_count + 1 * k) # Calculating the probabilities with Laplace Smoothing.
+            entropy_value = -np.sum(probabilities * np.log2(probabilities))  # Calculating the entropy
 
-    def predict(self, X):
-        return X.apply(lambda row: self._traverse_tree(row, self.tree), axis=1)
+            return entropy_value
+        left_entropy = entropy(y[left_indices])
+        right_entropy = entropy(y[right_indices])
 
+        # Calculating the total entropy
+        total_entropy = entropy(y)
+        weighted_entropy = (len(y[left_indices]) / len(y)) * left_entropy + (len(y[right_indices]) / len(y)) * right_entropy
+
+        return total_entropy - weighted_entropy   # Information Gain
+
+
+    def predict(self, x):
+        predictions = []
+        for _, row in x.iterrows():
+            predictions.append(self._traverse_tree(row, self.tree))
+        return np.array(predictions)
+
+    # A function that traverses the tree based on the values in the example
     def _traverse_tree(self, row, tree):
         if not isinstance(tree, dict):
             return tree
@@ -108,28 +107,3 @@ class DecisionTreeClassifier:
             return self._traverse_tree(row, tree['left'])
         else:
             return self._traverse_tree(row, tree['right'])
-
-# אימון המודל
-dt_classifier = DecisionTreeClassifier(max_depth=5)
-dt_classifier.fit(X_train, y_train)
-
-# חיזוי על סט האימון והבדיקה
-y_pred_train = dt_classifier.predict(X_train)
-y_pred_test = dt_classifier.predict(X_test)
-
-# 5. חישוב המטריקות
-# פונקציה לחישוב ביצועים
-def calculate_metrics(y_true, y_pred):
-    accuracy = np.mean(y_true == y_pred)
-    precision = np.sum((y_true == 1) & (y_pred == 1)) / np.sum(y_pred == 1)
-    recall = np.sum((y_true == 1) & (y_pred == 1)) / np.sum(y_true == 1)
-    f1_score = 2 * (precision * recall) / (precision + recall)
-    return accuracy, precision, recall, f1_score
-
-# חישוב המטריקות
-train_metrics = calculate_metrics(y_train.values, y_pred_train)
-test_metrics = calculate_metrics(y_test.values, y_pred_test)
-
-# הדפסת התוצאות
-print("Train Metrics (Accuracy, Precision, Recall, F1-Score):", train_metrics)
-print("Test Metrics (Accuracy, Precision, Recall, F1-Score):", test_metrics)

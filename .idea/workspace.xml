@@ -4,16 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="20a0becb-e8bf-43f0-8de2-32c7eec8f29b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/PythonProject5.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Decision tree.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/KNN.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Naive Bayes.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/project.py" afterDir="false" />
+    <list default="true" id="20a0becb-e8bf-43f0-8de2-32c7eec8f29b" name="Changes" comment="project.py">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DecisionTree.py" beforeDir="false" afterPath="$PROJECT_DIR$/DecisionTree.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,9 +23,21 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 7
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "shiragri"
+  }
 }]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/shiragri/PythonProject.git",
+    "accountId": "196fba9b-21f7-47a6-bdbe-b653b504d5f1"
+  }
+}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
   <component name="ProjectId" id="2rOBSRNbbK1IZP3JLizVW5rL33h" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -41,9 +46,12 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Python tests.Doctests in indexing.executor": "Debug",
     "Python.Decision tree.executor": "Run",
     "Python.KNN.executor": "Run",
     "Python.Naive Bayes.executor": "Run",
+    "Python.NaiveBayes.executor": "Debug",
+    "Python.project.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "master",
@@ -52,7 +60,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
+    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -79,16 +87,68 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1736420240420</updated>
-      <workItem from="1736420241473" duration="11850000" />
+      <workItem from="1736420241473" duration="25440000" />
+      <workItem from="1736773424628" duration="18985000" />
+      <workItem from="1736969103726" duration="4164000" />
+      <workItem from="1736977414509" duration="3933000" />
+      <workItem from="1737044317520" duration="31278000" />
     </task>
+    <task id="LOCAL-00001" summary="seperate classes">
+      <option name="closed" value="true" />
+      <created>1736459162577</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1736459162577</updated>
+    </task>
+    <task id="LOCAL-00002" summary="seperate classes">
+      <option name="closed" value="true" />
+      <created>1736459191999</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1736459191999</updated>
+    </task>
+    <task id="LOCAL-00003" summary="project.py">
+      <option name="closed" value="true" />
+      <created>1737374688050</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1737374688050</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="seperate classes" />
+    <MESSAGE value="project.py" />
+    <option name="LAST_COMMIT_MESSAGE" value="project.py" />
+  </component>
+  <component name="XDebuggerManager">
+    <watches-manager>
+      <configuration name="PythonConfigurationType">
+        <watch expression="y_train" />
+        <watch expression="x[y == cls]" />
+        <watch expression="y == cls" />
+        <watch expression="(np.sum(col == val)" />
+        <watch expression="np.sum(col == val)" />
+        <watch expression="np.log((np.sum(col == val) + 1) / (total_count + num_unique_values))" />
+        <watch expression="(np.sum(col == val) + 1) / (total_count + num_unique_values)" />
+        <watch expression="max(class_probs, key=class_probs.get)" />
+        <watch expression="class_probs.get" />
+      </configuration>
+    </watches-manager>
+  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/PythonProject5$NaiveBayes.coverage" NAME="NaiveBayes Coverage Results" MODIFIED="1736979528577" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/PythonProject5$project.coverage" NAME="project Coverage Results" MODIFIED="1737452911481" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/PythonProject5$Doctests_in_indexing.coverage" NAME="Doctests in indexing Coverage Results" MODIFIED="1736631510775" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$USER_HOME$/env/Lib/site-packages/pandas/core" />
     <SUITE FILE_PATH="coverage/PythonProject5$Decision_tree.coverage" NAME="Decision tree Coverage Results" MODIFIED="1736457531220" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/PythonProject5$Naive_Bayes.coverage" NAME="Naive Bayes Coverage Results" MODIFIED="1736457478885" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/PythonProject5$KNN.coverage" NAME="KNN Coverage Results" MODIFIED="1736458008824" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/PythonProject5$KNN.coverage" NAME="KNN Coverage Results" MODIFIED="1737045703782" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

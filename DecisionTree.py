@@ -107,3 +107,4 @@ class DecisionTreeClassifier:
             return self._traverse_tree(row, tree['left'])
         else:
             return self._traverse_tree(row, tree['right'])
+
